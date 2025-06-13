@@ -1,33 +1,27 @@
 require('./config/config');
 const express = require('express');
 const app = express();
-const cors = require('cors')
+const cors = require('cors');
 const mongoose = require('mongoose');
 
 app.disable('x-powered-by');
 
-app.use(cors({
-  origin: function (origin, callback) {
-    return callback(null, true);
-  },
-  optionsSuccessStatus: 200,
-  credentials: true
-}));
+// Habilitar CORS para todas las rutas
+app.use(cors());
 
-
-// use it before all route definitions
+// Si necesitas headers personalizados, puedes agregar esto:
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Headers', '*');
   next();
 });
 
+// Middleware para parsear JSON
+app.use(express.json());
 
-//Configuracion global de rutas
-app.use(require('./routes/index.js'));
+// Configuración global de rutas
+app.use('/api', require('./routes/index.js'));
 
-
-
-//Realizamos la conexion a la base de datos de MongoDB
+// Conexión a la base de datos de MongoDB
 const connectDB = async () => {
   try {
     await mongoose.connect('mongodb+srv://carigmer28:OAc29VWiF47kL3ym@pf-desweb.dwzynpa.mongodb.net/', {
@@ -41,10 +35,8 @@ const connectDB = async () => {
   }
 };
 
-//Llamamos a la funcion de conexion a la base de datos
 connectDB();
 
-//Conexion
 app.listen(process.env.PORT, () => {
   console.log(`Escuchando puerto: ${process.env.PORT}`);
-})
+});

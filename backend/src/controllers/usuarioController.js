@@ -16,6 +16,7 @@ exports.register = async (req, res) => {
     // Hashea la contraseña
     const hashedPassword = await bcrypt.hash(contraseña, 10);
 
+    
     const usuario = new Usuario({
       nombre,
       apellido,
@@ -26,7 +27,7 @@ exports.register = async (req, res) => {
       roles,
       telefono,
       direccion,
-      ciudad
+      ciudad,
     });
 
     await usuario.save();
@@ -35,6 +36,7 @@ exports.register = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 // Login usuario
 exports.login = async (req, res) => {

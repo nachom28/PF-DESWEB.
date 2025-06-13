@@ -1,18 +1,14 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
 
-// Middlewares para parsear JSON y urlencoded
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Importar rutas
 const usuarioRoutes = require('./usuario');
+const loginRoutes = require('./login');
 const turnoRoutes = require('./turno');
+//const registroRoutes = require('./registro');
 
-// Rutas de usuario (registro, login, etc.)
-app.use('/api/usuarios', usuarioRoutes);
+router.use('/usuarios', usuarioRoutes);
+router.use('/login', loginRoutes);
+router.use('/turnos', turnoRoutes);
+//router.use('/registro', registroRoutes);
 
-// Rutas de turnos
-app.use('/api/turnos', turnoRoutes);
-
-module.exports = app;
+module.exports = router;
