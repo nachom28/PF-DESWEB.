@@ -8,9 +8,12 @@ router.post('/register', usuarioController.register);
 // Login
 router.post('/login', usuarioController.login);
 
-// (Podés agregar más rutas si querés)
+// Get all usuarios
+router.get('/', usuarioController.getUsuarios);
 
-// Obtener usuarios (con filtro por rol)
 //router.get('/', usuarioController.getUsuarios);
-
+router.get('/test', (req, res) => {
+  res.send('Ruta test funcionando');
+});
+console.log('Cargando routes/usuario.js');
 module.exports = router;
